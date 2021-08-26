@@ -17,13 +17,13 @@ use App\Http\Controllers\ProductController;
 */
 
 
-
+//public routes
 Route::POST('/register',[UserController::class,"register"]);
 Route::POST('/login',[UserController::class,"login"]);
 
 
 Route::group(["middleware"=>["auth:sanctum"]],function(){
-    //auth
+    //auth route api
     Route::get("users",[UserController::class,"users"]);
     Route::post('/logout', [UserController::class, 'logout']);
     Route::get('/products', [ProductController::class, 'index']);
@@ -34,6 +34,5 @@ Route::group(["middleware"=>["auth:sanctum"]],function(){
     Route::get('/products/search/{name}', [ProductController::class, 'search']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
-    
 
 });
