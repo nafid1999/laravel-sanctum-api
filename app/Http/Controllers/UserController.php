@@ -33,13 +33,14 @@ class UserController extends Controller
        if(isset($user)){
           if(Hash::check($request->password,$user->password)){
               $token=$user->createToken("token")->plainTextToken;
-            return response()->json(["message"=>"logged in successfully", "token" =>$token]);
+              $cookie=cookie("cookie",$token,5);
+            return response(["message"=>"logged in successfully", "token" =>$token])->withCookie($cookie);
 
           }
            else
-           return response()->json(["message"=>"bad credentials "]);
+           return response()->json(["message"=>"bad credentials "],400);
        }else{
-        return response()->json(["message"=>"user not found"]);
+        return response()->json(["message"=>"user not found"],400);
        }
     }
 
